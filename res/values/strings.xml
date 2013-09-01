@@ -10,5 +10,10 @@
     <string name="open_web">Web</string>
     <string name="send_email">Email</string>
     <string name="create_event">Event</string>
+    <string name="use_chooser">Chooser</string>
+    <string name="get_number">Number</string>
+    <string name="make_call">Call</string>
+    <string name="share_text">Share Text</string>
+    <string name="share_image">Share Image</string>
 
 </resources>
