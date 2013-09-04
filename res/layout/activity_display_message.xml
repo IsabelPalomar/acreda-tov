@@ -71,6 +71,12 @@
 		       android:layout_height="wrap_content"
 		       android:text="@string/share_image"
 		       android:onClick="shareImage"  />
+	       
+	       <Button 
+	           android:layout_width="fill_parent"
+		       android:layout_height="wrap_content"
+		       android:text="@string/share_content"
+		       android:onClick="shareContent"  />
 	
 	</LinearLayout>
 

@@ -1,7 +1,7 @@
 package com.acreda.testorientacion;
 
-import java.io.Console;
-import java.sql.Date;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -17,27 +17,20 @@ import android.provider.MediaStore;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class DisplayMessageActivity extends Activity {
 
 	private static final int PICK_CONTACT_REQUEST = 1;
-	private static final int CAMERA_PIC_REQUEST = 1;
-
-
 
 
 	@SuppressLint("NewApi")
@@ -206,17 +199,42 @@ public class DisplayMessageActivity extends Activity {
     	}    	
     }
     
+    /**
+     * Share an image
+     * @param view
+     */
+    
     public void shareImage(View view){
     	Intent shareIntent = new Intent();
     	shareIntent.setAction(Intent.ACTION_SEND);
     	shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file:///" + getUriToLastImage() ));
     	shareIntent.setType("image/jpeg");
     	
-    	startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.share_image)));
+    	if(isIntentSafe(shareIntent)){
+    		startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.share_image)));
+    	}
 
     }
     
-    /*
+    /**
+     * Send Multiple Pieces of Content
+     * @param view
+     */
+    
+    public void shareContent(View view){
+    	ArrayList<Uri> imageUris = new ArrayList<Uri>();
+    	imageUris.add(Uri.parse("file:///" + getUriToLastImage() )); // Add your image URIs here
+    	imageUris.add(Uri.parse("file:///" + getUriToLastImage() ));
+
+    	Intent shareIntent = new Intent();
+    	shareIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
+    	shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, imageUris);
+    	shareIntent.setType("image/*");
+    	
+    	startActivity(Intent.createChooser(shareIntent, "Share images to.."));
+    }
+    
+    /**
      * Return the last image path
      */
     

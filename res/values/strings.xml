@@ -15,5 +15,6 @@
     <string name="make_call">Call</string>
     <string name="share_text">Share Text</string>
     <string name="share_image">Share Image</string>
+    <string name="share_content">Share Content</string>
 
 </resources>
