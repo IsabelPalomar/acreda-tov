@@ -1,6 +1,7 @@
 package com.acreda.testorientacion;
 
 import java.io.Console;
+import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 
@@ -15,21 +16,26 @@ import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.MediaStore;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DisplayMessageActivity extends Activity {
 
 	private static final int PICK_CONTACT_REQUEST = 1;
-	private static final String DATE_TAKEN = null;
+	private static final int CAMERA_PIC_REQUEST = 1;
 
 
 
@@ -203,32 +209,40 @@ public class DisplayMessageActivity extends Activity {
     public void shareImage(View view){
     	Intent shareIntent = new Intent();
     	shareIntent.setAction(Intent.ACTION_SEND);
-    	
-    	shareIntent.putExtra(Intent.EXTRA_STREAM, getUriToImage());
+    	shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file:///" + getUriToLastImage() ));
     	shareIntent.setType("image/jpeg");
+    	
     	startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.share_image)));
-    	
+
     }
     
-    public String getUriToImage(){
+    /*
+     * Return the last image path
+     */
+    
+    public String getUriToLastImage(){
     	
-    	String[] projection = new String[]{MediaStore.Images.ImageColumns._ID,
-                MediaStore.Images.ImageColumns.DATA,
-                MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME,
-                DATE_TAKEN,
-                MediaStore.Images.ImageColumns.MIME_TYPE
+        final ContentResolver cr = getContentResolver();
+        final String[] p1 = new String[] {
+                MediaStore.Images.ImageColumns._ID,
+                MediaStore.Images.ImageColumns.DATE_TAKEN,
+                MediaStore.Images.Media.DATA
         };
-    	
-        @SuppressWarnings("deprecation")
-		final Cursor cursor = managedQuery(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection, null, null, DATE_TAKEN + " DESC");
-        String imageLocation = cursor.getString(1);
         
-        return imageLocation;
+        Cursor c1 = cr.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, p1, null, null,
+                p1[1] + " DESC");
     	
-    	
+        String path = ""; 
+        int    idx  = 0;
+       
+       if(c1.moveToFirst()){
+    	   idx = c1.getColumnIndex(MediaStore.Images.ImageColumns.DATA); 
+    	   path = c1.getString(idx);
+       }
+       
+       return path;
+        	
     }
-    
-    
     
     
     @Override
@@ -261,7 +275,9 @@ public class DisplayMessageActivity extends Activity {
 
                 // Do something with the phone number...
             }
-        }
+        } 
+        
+        
     }
     
 
