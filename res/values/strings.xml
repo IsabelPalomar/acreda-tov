@@ -16,5 +16,7 @@
     <string name="share_text">Share Text</string>
     <string name="share_image">Share Image</string>
     <string name="share_content">Share Content</string>
-
+    <string name="first_shared_image">First Shared Image</string>
+    <string name="filter_btn">Gray</string>
+    <string name="save_btn">Save</string>
 </resources>

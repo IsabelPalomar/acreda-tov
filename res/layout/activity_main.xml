@@ -1,17 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal" >
-    <EditText android:id="@+id/hello_world"
-	        android:layout_weight="1"
-            android:layout_width="0dp"
-	        android:layout_height="wrap_content"
-	        android:hint="@string/hello_world" />
-	<Button
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/hello_world"
-	        android:onClick="sendMessage" />
-</LinearLayout>
+    android:layout_height="match_parent" >
+
+    <EditText
+        android:id="@+id/hello_world"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/hello_world" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/hello_world"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="24dp"
+        android:onClick="sendMessage"
+        android:text="@string/hello_world" />
+
+    <ImageView
+        android:id="@+id/first_shared_image"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_below="@+id/hello_world"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="62dp"
+        android:contentDescription="@string/first_shared_image" />
+
+    <Button
+        android:id="@+id/filter_btn"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/first_shared_image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:onClick="grayImage"
+        android:text="@string/filter_btn" />
+    
+     <Button
+        android:id="@+id/save_btn"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/filter_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:onClick="saveImage"
+        android:text="@string/save_btn" />
+    
+
+</RelativeLayout>
